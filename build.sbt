@@ -1,12 +1,26 @@
-ThisBuild / version := "0.1.0-SNAPSHOT"
-
+ThisBuild / version := "0.1.0"
+ThisBuild / organization := "com.github.jordanburke"
 ThisBuild / scalaVersion := "3.3.3"
 
 val Specs2Version = "5.5.1"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "scala-dotenv"
+    name := "scala-dotenv",
+    publishTo := {
+      val ghRepo = "https://github.com/jordanburke/scala-dotenv"
+      if (isSnapshot.value)
+        Some("GitHub Package Registry" at ghRepo)
+      else
+        Some("GitHub Package Registry" at ghRepo)
+    },
+    credentials += Credentials(
+      "GitHub Package Registry",
+      "maven.pkg.github.com",
+      sys.env.getOrElse("GITHUB_ACTOR", ""),
+      sys.env.getOrElse("GITHUB_TOKEN", "")
+    ),
+    publishMavenStyle := true
   )
 
 libraryDependencies ++= Seq(
