@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "scala-dotenv",
     publishTo := {
-      val ghRepo = "https://github.com/jordanburke/scala-dotenv"
+      val ghRepo = "https://maven.pkg.github.com/jordanburke/scala-dotenv"
       if (isSnapshot.value)
         Some("GitHub Package Registry" at ghRepo)
       else
