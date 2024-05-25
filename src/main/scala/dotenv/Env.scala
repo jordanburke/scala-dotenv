@@ -50,4 +50,8 @@ trait Env {
   val USER_HOME: String = (if (WINDOWS) WINDOWS_HOME else env.get("HOME")).getOrElse {
     throw new RuntimeException("Unknown User Home Variable!")
   }
+
+  def get(key: String): Option[String] = env.get(key)
+
+  def getOrElse(key: String, default: String): String = env.getOrElse(key, default)
 }
