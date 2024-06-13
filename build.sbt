@@ -1,4 +1,4 @@
-ThisBuild / version := "0.1.1"
+ThisBuild / version := "0.1.2"
 ThisBuild / organization := "com.github.jordanburke"
 ThisBuild / scalaVersion := "3.3.3"
 
@@ -25,6 +25,8 @@ lazy val root = (project in file("."))
 
 libraryDependencies ++= Seq(
   "org.log4s" %% "log4s" % "1.10.0",
+  "ch.qos.logback" % "logback-classic" % "1.5.6" % Runtime,
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
   "io.github.cdimascio" % "dotenv-java" % "3.0.0",
   "org.specs2" %% "specs2-core" % Specs2Version % Test,
 )

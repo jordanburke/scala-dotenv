@@ -2,31 +2,32 @@ package dotenv
 
 import dotenv.util.ProxyMap
 import io.github.cdimascio.dotenv.Dotenv
-import org.log4s.{getLogger, Logger}
+import logis.*
 
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 /**
  * New Env Composable Approach. Implementing Services/Libs can pick which ENV variables they want to use.
  */
 trait Env {
 
-  protected val log: Logger = getLogger
+  protected val log: Logger = Logger[Env]
 
   // Configure dotenv
   private val envFile = Dotenv.configure()
 
   // Load environment variables
   protected val env: Map[String, String] = {
-    val dotenv = try {
-      val dot = envFile.load()
-      log.warn("Loading .env file, this is NOT valid for Production")
-      dot
-    } catch {
-      case _: Throwable =>
-        log.info("No .env file found, this IS valid for Production")
-        envFile.ignoreIfMissing().load()
-    }
+    val dotenv =
+      try {
+        val dot = envFile.load()
+        log.warn("Loading .env file, this is NOT valid for Production")
+        dot
+      } catch {
+        case _: Throwable =>
+          log.info("No .env file found, this IS valid for Production")
+          envFile.ignoreIfMissing().load()
+      }
 
     val entries = dotenv.entries().iterator().asScala
     // Use a Proxy Map to log missing values

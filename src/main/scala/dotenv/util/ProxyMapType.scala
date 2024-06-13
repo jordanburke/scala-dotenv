@@ -1,6 +1,7 @@
 package dotenv.util
 
-import org.log4s.{Info, LogLevel, Logger, Warn}
+import logis.LogLevel.*
+import logis.{LogLevel, Logger}
 
 trait ProxyMapType[K, +V] {
 
@@ -10,9 +11,9 @@ trait ProxyMapType[K, +V] {
 
   protected def name: String = ""
 
-  protected def noneLevel: LogLevel = Warn
+  protected def noneLevel: LogLevel = WARN
 
-  protected def someLevel: LogLevel = Info
+  protected def someLevel: LogLevel = INFO
 
   private def some(key: K) = s"$name Key found: '$key'"
 
@@ -22,10 +23,10 @@ trait ProxyMapType[K, +V] {
     val v = map.get(key)
     v match {
       case Some(_) =>
-        log(someLevel)(some(key))
+        log.log(someLevel)(some(key))
         v
       case None =>
-        log(noneLevel)(none(key))
+        log.log(noneLevel)(none(key))
         v
     }
   }
@@ -33,11 +34,11 @@ trait ProxyMapType[K, +V] {
   protected def getOrElseImpl[V1 >: V](key: K, default: => V1): V1 =
     map.get(key) match {
       case Some(v) =>
-        log(someLevel)(some(key))
+        log.log(someLevel)(some(key))
         v
       case None =>
         val msg = s"$name Optional '$key' not provided. Defaulting to: '$default'"
-        log(someLevel)(msg)
+        log.log(someLevel)(msg)
         default
     }
 
